@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:BoardMapGenerator"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Name="btnNew" Content="New"></Button>
+                <Button Name="btnSettings" Content="Settings"></Button>
+            </ToolBar>
+        </ToolBarTray>
+        <ScrollViewer>
+            <Canvas Name="canvas">
+            </Canvas>
+        </ScrollViewer>
+    </DockPanel>
 </Window>
