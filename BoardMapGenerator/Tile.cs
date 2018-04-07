@@ -26,6 +26,8 @@ namespace BoardMapGenerator
         //public ETileType Type { get { return _tileType; } set { _tileType = value; } }
 
         public float TriHeight { get { return (Size * 0.5f * (float)Math.Tan(Math.PI * 60 / 180)); } }
+        public float MidPointHeight { get { return (Size * 0.5f * (float)Math.Tan(Math.PI * 30 / 180)); } }
+        public float Radius { get { return (TriHeight - MidPointHeight); } }
 
         private Canvas canvas;
 
@@ -33,19 +35,15 @@ namespace BoardMapGenerator
         {
             PointCollection points = new PointCollection();
 
-            Point p = new Point(0.0f, Size);
+            Point p = new Point(0.0f, Radius);
             Matrix rotMatrix = new Matrix();
-            rotMatrix.Rotate(30f);
-
-            p *= rotMatrix;
 
             points.Add(p);
 
-
-            for(int i = 1; i <= 5; i++)
+            for(int i = 1; i <= 2; i++)
             {
                 rotMatrix = new Matrix();
-                rotMatrix.Rotate(60 * i);
+                rotMatrix.Rotate(120 * i);
 
                 points.Add(p * rotMatrix);
             }

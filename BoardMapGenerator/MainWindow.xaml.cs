@@ -20,11 +20,13 @@ namespace BoardMapGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Tile[,] Map = new Tile[20,20];
+        public List<Tile> Map = new List<Tile>();
 
         public Vector MapPos = new Vector(100f, 100f);
 
-        Tile tile;
+        public int triCount = 10;
+
+        public float tileSize = 50f;
 
         public MainWindow()
         {
@@ -32,39 +34,41 @@ namespace BoardMapGenerator
 
             bool offset = false;
 
-            Map[0, 0] = new Tile();
+            float triHeight = tileSize * 0.5f * (float)Math.Tan(Math.PI * 60 / 180);
+            float midPointHeight = tileSize * 0.5f * (float)Math.Tan(Math.PI * 30 / 180);
+            float radius = triHeight - midPointHeight;
 
-            //Tile tile = Map[0, 0];
+            int index = 0;
+            float xIndex = 0;
 
-            //tile.Form.Fill = Brushes.LightBlue;
-            //tile.Form.Stroke = Brushes.Black;
-            //tile.Form.StrokeThickness = 1;
-            //tile.Size = 50f;
-            //tile.Position = MapPos;
-            //tile.Rotation = 0f;
-
-            //tile.AddToCanvas(canvas);
-            //tile.Update();
-            for(int x = 0; x < Map.GetLength(0); x++)
+            while (triCount > 0)
             {
-                for (int y = 0; y < Map.GetLength(1); y++)
-                {
-                    Map[x, y] = new Tile();
+                GenerateRow(new Vector(tileSize * .5f * index, triHeight * index), false, triCount);
+                GenerateRow(new Vector(tileSize * .5f + tileSize * xIndex, radius - midPointHeight + triHeight * index), true, --triCount);
 
-                    Tile tile = Map[x, y];
+                index++;
+                xIndex += 0.5f;
+            }
+        }
 
-                    tile.Form.Fill = Brushes.LightBlue;
-                    tile.Form.Stroke = Brushes.Black;
-                    tile.Form.StrokeThickness = 1;
-                    tile.Size = 50f;
-                    tile.Position = MapPos + new Vector((tile.Size * 0.5f + tile.Size) * x, offset ? tile.TriHeight * 2f * y + tile.TriHeight : tile.TriHeight * 2f * y);
-                    tile.Rotation = 0f;
+        private void GenerateRow(Vector offset, bool flip, int count)
+        {
 
-                    tile.AddToCanvas(canvas);
-                    tile.Update();
-                }
+            for (int i = 0; i < count; i++)
+            {
+                Tile tile = new Tile();
 
-                offset = !offset;
+                tile.Form.Fill = Brushes.LightBlue;
+                tile.Form.Stroke = Brushes.Black;
+                tile.Form.StrokeThickness = 1;
+                tile.Size = 50f;
+                tile.Position = MapPos + new Vector(tile.Size * i, 0) + offset;
+                tile.Rotation = flip ? 180f : 0f;
+
+                tile.AddToCanvas(canvas);
+                tile.Update();
+
+                Map.Add(tile);
             }
         }
     }
