@@ -20,8 +20,8 @@ namespace BoardMapGenerator
     public partial class TestFenster : Window
     {
         public TestFenster()
-        {            
-            InitializeComponent();            
+        {
+            InitializeComponent();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
