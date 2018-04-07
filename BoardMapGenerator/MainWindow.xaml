@@ -11,11 +11,12 @@
             <ToolBar>
                 <Button Name="btnNew" Content="New" Click="btnNew_Click"></Button>
                 <Button Name="btnSettings" Content="Settings"></Button>
+                <Button Name="btnExport" Content="Export" Click="btnExport_Click"></Button>
             </ToolBar>
         </ToolBarTray>
-        <ScrollViewer>
-            <Canvas Name="canvas">
-            </Canvas>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <Grid Name="canvas">
+            </Grid>
         </ScrollViewer>
     </DockPanel>
 </Window>

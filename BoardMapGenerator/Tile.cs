@@ -29,7 +29,7 @@ namespace BoardMapGenerator
         public float MidPointHeight { get { return (Size * 0.5f * (float)Math.Tan(Math.PI * 30 / 180)); } }
         public float Radius { get { return (TriHeight - MidPointHeight); } }
 
-        private Canvas canvas;
+        private Grid canvas;
 
         public void Update()
         {
@@ -60,7 +60,7 @@ namespace BoardMapGenerator
             Form.Points = points;
         }
 
-        public void AddToCanvas(Canvas c )
+        public void AddToCanvas(Grid c )
         {
             if (canvas != null)
                 canvas.Children.Remove(Form);

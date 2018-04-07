@@ -92,5 +92,37 @@ namespace BoardMapGenerator
                 xIndex += 0.5f;
             }
         }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Map"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG (.png)|*.png"; // Filter files by extension
+
+            // Show save file dialog box
+            bool? result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+                rtb.Render(canvas);
+
+                //var crop = new CroppedBitmap(rtb, new Int32Rect(50, 50, 250, 250));
+
+                BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                using (var fs = System.IO.File.OpenWrite(filename))
+                {
+                    pngEncoder.Save(fs);
+                }
+            }
+        }
     }
 }
