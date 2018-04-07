@@ -32,7 +32,49 @@ namespace BoardMapGenerator
         {
             InitializeComponent();
 
-            bool offset = false;
+            GenerateMap();
+        }
+
+        private void GenerateRow(Vector offset, bool flip, int count)
+        {
+
+            for (int i = 0; i < count; i++)
+            {
+                Tile tile = new Tile();
+
+                tile.Form.Fill = Brushes.LightBlue;
+                tile.Form.Stroke = Brushes.Black;
+                tile.Form.StrokeThickness = 1;
+                tile.Size = tileSize;
+                tile.Position = MapPos + new Vector(tile.Size * i, 0) + offset;
+                tile.Rotation = flip ? 180f : 0f;
+
+                tile.AddToCanvas(canvas);
+                tile.Update();
+
+                Map.Add(tile);
+            }
+        }
+
+        private void btnNew_Click(object sender, RoutedEventArgs e)
+        {
+            MapSettings dlg = new MapSettings();
+
+            dlg.Owner = this;
+
+            if(dlg.ShowDialog() == true)
+            {
+                triCount = dlg.MapSize;
+                tileSize = dlg.TileSize;
+
+                GenerateMap();
+            }
+        }
+
+        private void GenerateMap()
+        {
+            canvas.Children.Clear();
+            Map.Clear();
 
             float triHeight = tileSize * 0.5f * (float)Math.Tan(Math.PI * 60 / 180);
             float midPointHeight = tileSize * 0.5f * (float)Math.Tan(Math.PI * 30 / 180);
@@ -48,27 +90,6 @@ namespace BoardMapGenerator
 
                 index++;
                 xIndex += 0.5f;
-            }
-        }
-
-        private void GenerateRow(Vector offset, bool flip, int count)
-        {
-
-            for (int i = 0; i < count; i++)
-            {
-                Tile tile = new Tile();
-
-                tile.Form.Fill = Brushes.LightBlue;
-                tile.Form.Stroke = Brushes.Black;
-                tile.Form.StrokeThickness = 1;
-                tile.Size = 50f;
-                tile.Position = MapPos + new Vector(tile.Size * i, 0) + offset;
-                tile.Rotation = flip ? 180f : 0f;
-
-                tile.AddToCanvas(canvas);
-                tile.Update();
-
-                Map.Add(tile);
             }
         }
     }

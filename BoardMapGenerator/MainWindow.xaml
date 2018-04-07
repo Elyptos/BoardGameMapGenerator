@@ -9,7 +9,7 @@
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Name="btnNew" Content="New"></Button>
+                <Button Name="btnNew" Content="New" Click="btnNew_Click"></Button>
                 <Button Name="btnSettings" Content="Settings"></Button>
             </ToolBar>
         </ToolBarTray>

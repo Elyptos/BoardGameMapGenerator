@@ -19,9 +19,23 @@ namespace BoardMapGenerator
     /// </summary>
     public partial class MapSettings : Window
     {
+        public int MapSize;
+        public float TileSize;
+
         public MapSettings()
         {
             InitializeComponent();
+        }
+
+        private void okButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(txtSize.Text, out MapSize) || (!float.TryParse(txtTileSize.Text, out TileSize)))
+            {
+                return;
+            }
+
+            DialogResult = true;
+            Close();
         }
     }
 }
