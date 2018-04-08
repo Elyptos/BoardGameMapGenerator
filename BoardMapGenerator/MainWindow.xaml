@@ -3,20 +3,67 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:BoardMapGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Map Editor" Height="650" Width="825">
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Name="btnNew" Content="New" Click="btnNew_Click"></Button>
-                <Button Name="btnSettings" Content="Settings"></Button>
-                <Button Name="btnExport" Content="Export" Click="btnExport_Click"></Button>
+                <UniformGrid Columns="6">
+                    <Button Grid.Column="0" Margin="5" Padding="5" BorderBrush="Black" BorderThickness="1" Name="btnNew" Content="New" Click="btnNew_Click"></Button>
+                    <Button Grid.Column="1" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSettings" Content="Settings"></Button>
+                    <Button Grid.Column="2" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSave" Content="Save" Click="btnSave_Click"></Button>
+                    <Button Grid.Column="3" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSaveAs" Content="Save As" Click="btnSaveAs_Click"></Button>
+                    <Button Grid.Column="4" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnOpen" Content="Open" Click="btnOpen_Click"></Button>
+                    <Button Grid.Column="5" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnExport" Content="Export" Click="btnExport_Click"></Button>
+                </UniformGrid>
             </ToolBar>
         </ToolBarTray>
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-            <Grid Name="canvas">
-            </Grid>
-        </ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Toolbox" FontSize="20" BorderBrush="Black" BorderThickness="2" Grid.Column="0">
+                <StackPanel>
+                    <xctk:ColorPicker Name="colorPicker" SelectedColorChanged="colorPicker_SelectedColorChanged"></xctk:ColorPicker>
+                    <ToggleButton Name="btnFill" Content="Fill" Click="btnFill_Click"></ToggleButton>
+                    <GroupBox Header="Images" BorderBrush="Black" BorderThickness="1">
+                        <StackPanel>
+                            <ScrollViewer>
+                                <ListBox Name="lImages" SelectionChanged="lImages_SelectionChanged">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border BorderThickness="1" BorderBrush="LightGray">
+                                                    <Image Width="50" Height="50" Source="{Binding Image}"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding ImageName}"></TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="btnAddImg" Content="Add" Grid.Column="0" Click="btnAddImg_Click"></Button>
+                                <Button Name="btnRemoveImg" Content="Remove" Grid.Column="1" Click="btnRemoveImg_Click"></Button>
+                            </Grid>
+                            <ToggleButton Name="btnSetImg" Content="Set Image" Click="btnSetImg_Click"></ToggleButton>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
+            <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                <Grid Name="canvas">
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </DockPanel>
 </Window>
