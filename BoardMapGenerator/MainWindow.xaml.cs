@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,7 @@ namespace BoardMapGenerator
             if(dlg.ShowDialog() == true)
             {
                 DataRepo.TriCount = dlg.MapSize;
-                DataRepo.TileSize = dlg.TileSize;
+                DataRepo.TileSize = Utils.CentimetersToPixel(dlg.TileSize);
 
                 GenerateMap();
             }
@@ -86,6 +87,10 @@ namespace BoardMapGenerator
             float triHeight = DataRepo.TileSize * 0.5f * (float)Math.Tan(Math.PI * 60 / 180);
             float midPointHeight = DataRepo.TileSize * 0.5f * (float)Math.Tan(Math.PI * 30 / 180);
             float radius = triHeight - midPointHeight;
+
+            DataRepo.MapPos = new Vector(DataRepo.TileSize / 2, midPointHeight);
+            zoomBox.Width = DataRepo.TileSize * DataRepo.TriCount;
+            zoomBox.Height = (zoomBox.Width * 0.5f) * (float)Math.Tan(Math.PI * 60 / 180);
 
             int index = 0;
             float xIndex = 0;
@@ -119,7 +124,7 @@ namespace BoardMapGenerator
                 // Save document
                 string filename = dlg.FileName;
 
-                RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, Utils.DPI, Utils.DPI, System.Windows.Media.PixelFormats.Default);
                 rtb.Render(canvas);
 
                 //var crop = new CroppedBitmap(rtb, new Int32Rect(50, 50, 250, 250));
@@ -238,6 +243,9 @@ namespace BoardMapGenerator
                 OpenedFilePath = dlg.FileName;
 
                 DataRepo.LoadFromDisk(dlg.FileName, this);
+
+                zoomBox.Width = DataRepo.TileSize * DataRepo.TriCount;
+                zoomBox.Height = (zoomBox.Width * 0.5f) * (float)Math.Tan(Math.PI * 60 / 180);
             }
         }
 
@@ -256,6 +264,34 @@ namespace BoardMapGenerator
                 OpenedFilePath = dlg.FileName;
 
                 DataRepo.SaveToDisk(OpenedFilePath);
+            }
+        }
+
+        private void zoomBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            int zoomVal = (e.Delta > 0) ? 10 : -10;
+
+            if(zoomBox.Width >= 0 && zoomBox.Height >= 0)
+            {
+                zoomBox.Width += zoomVal;
+                zoomBox.Height += zoomVal;
+            }
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+
+            
+
+            if(printDialog.ShowDialog() == true)
+            {
+                FixedDocument doc = Utils.GetFixedDocument(canvas, printDialog);
+
+                if(Utils.ShowPrintPreview(doc) == true)
+                {
+                    
+                }
             }
         }
     }

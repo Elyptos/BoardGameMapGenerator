@@ -8,18 +8,15 @@
         mc:Ignorable="d"
         Title="Map Editor" Height="650" Width="825">
     <DockPanel>
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
-                <UniformGrid Columns="6">
-                    <Button Grid.Column="0" Margin="5" Padding="5" BorderBrush="Black" BorderThickness="1" Name="btnNew" Content="New" Click="btnNew_Click"></Button>
-                    <Button Grid.Column="1" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSettings" Content="Settings"></Button>
-                    <Button Grid.Column="2" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSave" Content="Save" Click="btnSave_Click"></Button>
-                    <Button Grid.Column="3" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSaveAs" Content="Save As" Click="btnSaveAs_Click"></Button>
-                    <Button Grid.Column="4" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnOpen" Content="Open" Click="btnOpen_Click"></Button>
-                    <Button Grid.Column="5" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnExport" Content="Export" Click="btnExport_Click"></Button>
-                </UniformGrid>
-            </ToolBar>
-        </ToolBarTray>
+        <UniformGrid Columns="7" DockPanel.Dock="Top" Background="AliceBlue">
+            <Button Grid.Column="0" Margin="5" Padding="5" BorderBrush="Black" BorderThickness="1" Name="btnNew" Content="New" Click="btnNew_Click"></Button>
+            <Button Grid.Column="1" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSettings" Content="Settings"></Button>
+            <Button Grid.Column="2" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSave" Content="Save" Click="btnSave_Click"></Button>
+            <Button Grid.Column="3" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnSaveAs" Content="Save As" Click="btnSaveAs_Click"></Button>
+            <Button Grid.Column="4" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnOpen" Content="Open" Click="btnOpen_Click"></Button>
+            <Button Grid.Column="5" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnExport" Content="Export" Click="btnExport_Click"></Button>
+            <Button Grid.Column="6" Margin="5" Padding="5"  BorderBrush="Black" BorderThickness="1" Name="btnPrint" Content="Print" Click="btnPrint_Click"></Button>
+        </UniformGrid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"></ColumnDefinition>
@@ -61,8 +58,10 @@
             </GroupBox>
             <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
             <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-                <Grid Name="canvas">
-                </Grid>
+                <Viewbox Name="zoomBox" MouseWheel="zoomBox_MouseWheel" >
+                    <Grid Name="canvas">
+                    </Grid>
+                </Viewbox>
             </ScrollViewer>
         </Grid>
     </DockPanel>

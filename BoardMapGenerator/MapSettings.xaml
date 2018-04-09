@@ -24,7 +24,7 @@
             <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Map Size:"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Tile Size:"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Tile Size (cm):"/>
 
         <TextBox Name="txtSize" Grid.Column="1" Grid.Row="0" Margin="3" />
         <TextBox Name="txtTileSize" Grid.Column="1" Grid.Row="1" Margin="3" />
