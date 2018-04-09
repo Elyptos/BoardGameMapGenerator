@@ -171,9 +171,9 @@ namespace BoardMapGenerator
                         c = bgImage.GetPixel(x, y);
 
                         float a = c.A / 255;
-                        byte r = (byte)(BackgroundColor.R * (1f - a) + c.R);
-                        byte g = (byte)(BackgroundColor.G * (1f - a) + c.G);
-                        byte b = (byte)(BackgroundColor.B * (1f - a) + c.B);
+                        byte r = (byte)(BackgroundColor.R * (1f - a) + c.R * a);
+                        byte g = (byte)(BackgroundColor.G * (1f - a) + c.G * a);
+                        byte b = (byte)(BackgroundColor.B * (1f - a) + c.B * a);
 
                         bitmap.SetPixel(x, y, System.Drawing.Color.FromArgb(255, r, g, b));
                     }
