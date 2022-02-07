@@ -25,6 +25,7 @@ namespace BoardMapGenerator
         public Vector MapPos = new Vector(100f, 100f);
         public int TriCount = 10;
         public float TileSize = 50f;
+        public int Trim = 7;
 
         public void SaveToDisk(string filePath)
         {

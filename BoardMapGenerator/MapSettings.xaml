@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="BoardMapGenerator.MapSettings"
     xmlns:local="clr-namespace:BoardMapGenerator"
-    Title="Margins"
+    Title="Settings"
     Height="200"
     Width="300"
     MinHeight="10"
@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -25,16 +26,21 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Map Size:"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Tile Size (cm):"/>
-
-        <TextBox Name="txtSize" Grid.Column="1" Grid.Row="0" Margin="3" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Trim:"></Label>
+        
+        <TextBox Name="txtSize" Grid.Column="1" Grid.Row="0" Margin="3"/>
         <TextBox Name="txtTileSize" Grid.Column="1" Grid.Row="1" Margin="3" />
+        <TextBox Name="txtTrim" Grid.Column="1" Grid.Row="2" Margin="3"></TextBox>
 
-        <!-- Accept or Cancel -->
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal">
-            <Button Name="okButton" IsDefault="True" HorizontalAlignment="Stretch" Click="okButton_Click">OK</Button>
-            <Button Name="cancelButton" IsCancel="True" HorizontalAlignment="Stretch">Cancel</Button>
-        </StackPanel>
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <Button Grid.Column="0" Name="okButton" IsDefault="True" HorizontalAlignment="Stretch" Click="okButton_Click">OK</Button>
+            <Button Grid.Column="1" Name="cancelButton" IsCancel="True" HorizontalAlignment="Stretch">Cancel</Button>
+        </Grid>
     </Grid >
 
 </Window>

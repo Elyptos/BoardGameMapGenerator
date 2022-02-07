@@ -21,15 +21,29 @@ namespace BoardMapGenerator
     {
         public int MapSize;
         public float TileSize;
+        public int Trim = 0;
+
+        public void Init(int mapSize, float tileSize, int trim)
+        {
+            MapSize = mapSize;
+            TileSize = tileSize;
+            Trim = trim;
+
+            txtSize.Text = MapSize.ToString();
+            txtTileSize.Text = TileSize.ToString();
+            txtTrim.Text = Trim.ToString();
+        }
 
         public MapSettings()
         {
             InitializeComponent();
+
+            Init(10, 3f, 0);
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!int.TryParse(txtSize.Text, out MapSize) || (!float.TryParse(txtTileSize.Text, out TileSize)))
+            if (!int.TryParse(txtSize.Text, out MapSize) || (!float.TryParse(txtTileSize.Text, out TileSize)) || !int.TryParse(txtTrim.Text, out Trim))
             {
                 return;
             }

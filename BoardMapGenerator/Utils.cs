@@ -61,8 +61,11 @@ namespace BoardMapGenerator
             toPrint.Arrange(new Rect(new System.Windows.Point(0, 0), toPrint.DesiredSize));
             //  
             System.Windows.Size size = toPrint.DesiredSize;
-            //Will assume for simplicity the control fits horizontally on the page  
-            double yOffset = 0;
+
+            int pageCountX = (int)Math.Ceiling(size.Width / visibleSize.Width);
+            int pageCountY = (int)Math.Ceiling(size.Height / visibleSize.Height);
+
+            double yOffset = 0;//(pageCountY * visibleSize.Height - size.Height) * 0.5f;
             double xOffset = 0;
 
             while (yOffset < size.Height)

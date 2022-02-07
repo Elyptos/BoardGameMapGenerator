@@ -43,11 +43,22 @@ namespace BoardMapGenerator
             GenerateMap();
         }
 
-        private void GenerateRow(Vector offset, bool flip, int count)
+        private void GenerateRow(Vector offset, bool flip, int count, int xIndex, int yIndex)
         {
+            int lastTriangle = DataRepo.TriCount + DataRepo.TriCount - 2 - DataRepo.Trim + yIndex;
+            int lastTriangleHeight = DataRepo.TriCount - (int)Math.Ceiling(DataRepo.Trim / 2d) - 1;
+
+            if (yIndex > lastTriangleHeight)
+                return;
 
             for (int i = 0; i < count; i++)
             {
+                if (xIndex < DataRepo.Trim - yIndex || xIndex > lastTriangle)
+                {
+                    xIndex+=2;
+                    continue;
+                }
+
                 Tile tile = new Tile(this);
 
                 tile.Form.Fill = Brushes.LightBlue;
@@ -61,6 +72,8 @@ namespace BoardMapGenerator
                 tile.Update();
 
                 DataRepo.Map.Add(tile);
+
+                xIndex+=2;
             }
         }
 
@@ -74,6 +87,7 @@ namespace BoardMapGenerator
             {
                 DataRepo.TriCount = dlg.MapSize;
                 DataRepo.TileSize = Utils.CentimetersToPixel(dlg.TileSize);
+                DataRepo.Trim = dlg.Trim;
 
                 GenerateMap();
             }
@@ -97,13 +111,18 @@ namespace BoardMapGenerator
 
             int triCount = DataRepo.TriCount;
 
+            int trimIndexX = 0;
+            int trimIndexY = 0;
+
             while (triCount > 0)
             {
-                GenerateRow(new Vector(DataRepo.TileSize * .5f * index, triHeight * index), false, triCount);
-                GenerateRow(new Vector(DataRepo.TileSize * .5f + DataRepo.TileSize * xIndex, radius - midPointHeight + triHeight * index), true, --triCount);
+                GenerateRow(new Vector(DataRepo.TileSize * .5f * index, triHeight * index), false, triCount, trimIndexX, trimIndexY);
+                GenerateRow(new Vector(DataRepo.TileSize * .5f + DataRepo.TileSize * xIndex, radius - midPointHeight + triHeight * index), true, --triCount, trimIndexX + 1, trimIndexY);
 
                 index++;
                 xIndex += 0.5f;
+                trimIndexX++;
+                trimIndexY++;
             }
         }
 
